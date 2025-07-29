@@ -1,0 +1,5 @@
+pytest==7.4.0
+pytest-bdd==6.1.1
+selenium==4.11.2
+webdriver-manager==3.8.6
+
