@@ -1,5 +1,5 @@
 import time
-
+from dataclasses import dataclass
 import pytest
 from pytest_bdd import scenarios, given, when, then
 from selenium import webdriver
@@ -28,6 +28,12 @@ def driver():
     yield driver
     driver.quit()
 
+@dataclass
+class UserCredentials:
+    email: str
+    password: str
+
+TEST_CREDS = UserCredentials(email="danielpashtetov@gmail.com", password="946815Vip")
 
 @given('I am on the login page')
 def navigate_to_login(driver):
@@ -46,11 +52,12 @@ def handle_cookie_consent(driver):
 
 @when('I enter valid credentials')
 def enter_credentials(driver):
+    email, password = TEST_CREDS.email, TEST_CREDS.password
     email_input = driver.find_element(By.XPATH, "//ion-input[@id='email']//input")
     password_input = driver.find_element(By.XPATH, "//ion-input[@id='password']//input")
 
-    email_input.send_keys("danielpashtetov@gmail.com")
-    password_input.send_keys("946815Vip")
+    email_input.send_keys(email)
+    password_input.send_keys(password)
     time.sleep(0.2)  # or wait is-active condition for the button instead
 
 
